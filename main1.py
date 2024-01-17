@@ -1,3 +1,4 @@
+import os
 import torch
 from tqdm import trange
 import gymnasium as gym
@@ -91,7 +92,7 @@ if __name__ == "__main__":
         "generate/top_k": 0,
         "generate/temperature": 0.9
     }
-    wandb.init(project="LlamaGym", config=hyperparams)
+    wandb_run = wandb.init(project="LlamaGym", config=hyperparams)
     device = "cuda:0"
 
     lora_config = LoraConfig(
@@ -192,8 +193,10 @@ if __name__ == "__main__":
             torch.cuda.empty_cache()
         
         if episode % 1000 == 0:
-            model.save_pretrained("./checkpoints")
+            checkpoint_dir = f"./checkpoints/{wandb_run.name}/{str(episode)}"
+            os.makedirs(checkpoint_dir, exist_ok=True)
+            model.save_pretrained(checkpoint_dir)
 
     env.close()
 
-    model.save_pretrained("./checkpoints")
+    model.save_pretrained(f"./checkpoints/{wandb_run.name}")
