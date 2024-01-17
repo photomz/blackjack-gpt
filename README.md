@@ -30,3 +30,11 @@ pip install -r requirements.txt
 ## Contributing
 
 Yes plz help, we guzzle PRs like gutters in the rain.
+
+### TODO:
+- [ ] read deeper into PPO (and PPO+LoRA work) to understand the logs and hyperparams
+- [ ] try a more deterministic env or text game
+- [ ] log action choices
+  - [ ] log only after trainstep, not each episode? is this causing slowdown? thread it out maybe? is there a setting that allows logs to accumulate locally and then send at once less regularly?
+- [ ] wandb hyperparam sweep
+- [ ] refactory and package/framework-ize as Llama-Gym
